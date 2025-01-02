@@ -29,6 +29,7 @@
         };
         nixosModules = inputs.modulix.lib.mkModules {
             path = ./modules;
+            defaultHost = "host1";
         };
     };
 }
