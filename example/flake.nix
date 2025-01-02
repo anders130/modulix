@@ -16,8 +16,9 @@
     };
 
     outputs = inputs: {
-        nixosConfigurations = inputs.modulix.lib.mkHosts {
+        nixosConfigurations = inputs.modulix.lib.mkHosts {inherit inputs;} {
             path = ./hosts;
+            modulesPath = ./modules;
             specialArgs = {
                 hostname = "nixos";
                 username = "defaultuser";
@@ -26,10 +27,6 @@
                     userName = "User Name";
                 };
             };
-        };
-        nixosModules = inputs.modulix.lib.mkModules {
-            path = ./modules;
-            defaultHost = "host1";
         };
     };
 }

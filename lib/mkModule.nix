@@ -1,14 +1,16 @@
-{lib, ...}: hostConfig: createEnableOption: path: {
+{lib, ...}: hostArgs: createEnableOption: path: {
     imports ? [],
     options ? {},
     config ? null,
     ...
 } @ args: let
     inherit (builtins) elemAt isAttrs length;
-    inherit (lib) foldr mkIf removeSuffix splitString;
+    inherit (lib) foldr mkIf mkRelativePath removeSuffix splitString;
+
+    hostConfig = hostArgs.config;
 
     pathList = path
-        |> lib.mkRelativePath
+        |> mkRelativePath hostArgs.inputs.self # relative path to the configs flake root
         |> removeSuffix ".nix"
         |> removeSuffix "/default" # if path is a default.nix, remove it
         |> splitString "/";

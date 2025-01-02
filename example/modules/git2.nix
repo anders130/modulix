@@ -4,7 +4,7 @@
     ...
 }: {
     options = {
-        userMail = lib.mkOption {
+        userEmail = lib.mkOption {
             type = lib.types.str;
             default = "user@example.com";
         };

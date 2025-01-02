@@ -3,5 +3,6 @@ inputs: {
     username = "user1";
     modules = with inputs; [
         # extra nixosModules only needed for this host
+        home-manager.nixosModules.home-manager
     ];
 }
