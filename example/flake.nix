@@ -18,6 +18,7 @@
     outputs = inputs: {
         nixosConfigurations = inputs.modulix.lib.mkHosts {
             inherit inputs;
+            flakePath = "/home/jesse/Projects/modulix/example";
             modulesPath = ./modules;
             specialArgs = {
                 hostname = "nixos";

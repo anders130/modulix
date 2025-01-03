@@ -1,5 +1,6 @@
 {lib, ...}: {
     inputs,
+    flakePath ? null,
     path ? null,
     modulesPath ? null,
     specialArgs ? {},
@@ -7,28 +8,34 @@
     inherit (builtins) attrNames filter listToAttrs pathExists readDir;
     inherit (lib) mkModules nixosSystem;
 
-    flakePath = sub: "${inputs.self}/${sub}";
-    path' = if path == null then flakePath "hosts" else path;
+    path' =
+        if path == null
+        then "${inputs.self}/hosts"
+        else path;
+
     hostPath = sub: "${path'}/${sub}";
 
     mkHost = name: internalConfig @ {
+        isThinClient ? false,
         modules ? [],
         system ? "x86_64-linux",
         ...
-    }:
-        nixosSystem {
+    }: nixosSystem {
             inherit system;
-            modules = modules ++ [
-                (hostPath name) # relative path to the hosts default.nix
-                (args @ {pkgs, ...}: let
-                    fixedArgs = args // {inherit pkgs;};
-                in
-                    if modulesPath == null then {}
-                    else mkModules fixedArgs modulesPath
-                )
-            ];
+            # don't remove pkgs because otherwise args doesn't have it
+            modules = modules ++ [(args @ {pkgs, ...}: let
+                args' = args // {lib = lib.configure args;};
+            in {
+                imports =
+                    [(import (hostPath name) args')]
+                    ++ (
+                        if modulesPath == null then []
+                        else (mkModules args' modulesPath).imports
+                    );
+            }
+            )];
             specialArgs = specialArgs // internalConfig // {
-                inherit internalConfig inputs;
+                inherit internalConfig inputs isThinClient flakePath;
             };
         };
 
