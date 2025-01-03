@@ -4,6 +4,7 @@
     path ? null,
     modulesPath ? null,
     specialArgs ? {},
+    sharedConfig ? {},
 }: let
     inherit (builtins) attrNames filter listToAttrs pathExists readDir;
     inherit (lib) mkModules nixosSystem;
@@ -26,12 +27,13 @@
             modules = modules ++ [(args @ {pkgs, ...}: let
                 args' = args // {lib = lib.configure args;};
             in {
-                imports =
-                    [(import (hostPath name) args')]
-                    ++ (
-                        if modulesPath == null then []
-                        else (mkModules args' modulesPath).imports
-                    );
+                imports = [
+                    (import (hostPath name) args')
+                    sharedConfig
+                ] ++ (
+                    if modulesPath == null then []
+                    else (mkModules args' modulesPath).imports
+                );
             }
             )];
             specialArgs = specialArgs // internalConfig // {

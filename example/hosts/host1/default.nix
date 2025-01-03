@@ -4,7 +4,6 @@
     modules = {
         fish.enable = true;
         git.enable = true;
-        home-manager.enable = true;
     };
 
     system.stateVersion = "24.11";

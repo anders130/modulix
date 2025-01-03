@@ -28,6 +28,9 @@
                     userName = "User Name";
                 };
             };
+            sharedConfig = {
+                modules.home-manager.enable = true;
+            };
         };
     };
 }
