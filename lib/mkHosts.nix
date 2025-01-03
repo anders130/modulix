@@ -1,10 +1,11 @@
 {lib, ...}: {
     inputs,
     flakePath ? null,
-    path ? null,
+    helpers ? {},
     modulesPath ? null,
-    specialArgs ? {},
+    path ? null,
     sharedConfig ? {},
+    specialArgs ? {},
 }: let
     inherit (builtins) attrNames filter listToAttrs pathExists readDir;
     inherit (lib) mkModules nixosSystem;
@@ -25,7 +26,7 @@
             inherit system;
             # don't remove pkgs because otherwise args doesn't have it
             modules = modules ++ [(args @ {pkgs, ...}: let
-                args' = args // {lib = lib.configure args;};
+                args' = args // {lib = lib.configure args helpers;};
             in {
                 imports = [
                     (import (hostPath name) args')

@@ -5,8 +5,9 @@
     isThinClient,
     username,
     ...
-}:
+}: helpers:
 lib
+// helpers
 // {
     mkSymlink = lib.mkSymlink {
         inherit (inputs) self;
