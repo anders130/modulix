@@ -17,7 +17,7 @@
 
     hostPath = sub: "${path'}/${sub}";
 
-    mkHost = name: internalConfig @ {
+    mkHost = internalName: internalConfig @ {
         isThinClient ? false,
         modules ? [],
         system ? "x86_64-linux",
@@ -29,7 +29,7 @@
                 args' = args // {lib = lib.configure args helpers;};
             in {
                 imports = [
-                    (import (hostPath name) args')
+                    (import (hostPath internalName) args')
                     sharedConfig
                 ] ++ (
                     if modulesPath == null then []
@@ -38,7 +38,7 @@
             }
             )];
             specialArgs = specialArgs // internalConfig // {
-                inherit internalConfig inputs isThinClient flakePath;
+                inherit internalName inputs isThinClient flakePath;
             };
         };
 
