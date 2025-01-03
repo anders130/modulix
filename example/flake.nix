@@ -16,8 +16,8 @@
     };
 
     outputs = inputs: {
-        nixosConfigurations = inputs.modulix.lib.mkHosts {inherit inputs;} {
-            path = ./hosts;
+        nixosConfigurations = inputs.modulix.lib.mkHosts {
+            inherit inputs;
             modulesPath = ./modules;
             specialArgs = {
                 hostname = "nixos";
