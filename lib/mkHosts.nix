@@ -7,7 +7,7 @@
     sharedConfig ? {},
     specialArgs ? {},
 }: let
-    inherit (builtins) attrNames filter listToAttrs pathExists readDir;
+    inherit (builtins) attrNames filter isAttrs listToAttrs pathExists readDir;
     inherit (lib) mkModules nixosSystem;
 
     path' =
@@ -29,7 +29,11 @@
                 args' = args // {lib = lib.configure args helpers;};
             in {
                 imports = [
-                    (import (hostPath internalName) args')
+                    (internalName
+                        |> hostPath
+                        |> import
+                        |> (c: if isAttrs c then c else c args')
+                    )
                     sharedConfig
                 ] ++ (
                     if modulesPath == null then []
