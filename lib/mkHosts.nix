@@ -21,6 +21,7 @@
         isThinClient ? false,
         modules ? [],
         system ? "x86_64-linux",
+        username ? "nixos",
         ...
     }: nixosSystem {
             inherit system;
@@ -39,8 +40,7 @@
                     if modulesPath == null then []
                     else (mkModules args' modulesPath).imports
                 );
-            }
-            )];
+            })];
             specialArgs = specialArgs // internalConfig // {
                 inherit internalName inputs isThinClient flakePath;
             };

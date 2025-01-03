@@ -2,6 +2,8 @@
 
 A library for creating modularized nixos configurations.
 
+Please have a look at [lib](./lib) for more information about the library functions.
+
 ## Usage
 
 Look at the [example](./example) directory for a working example.
@@ -24,12 +26,14 @@ Look at the [example](./example) directory for a working example.
     };
 
     outputs = inputs: {
-        nixosConfigurations = inputs.modulix.lib.mkHosts {inherit inputs;} {
-            path = ./hosts-directory;
-            modulesPath = ./modules-directory;
+        nixosConfigurations = inputs.modulix.lib.mkHosts {
+            inherit inputs;
+            path = ./hosts-directory; # optional
+            flakePath = "/path/to/flake"; # for lib.mkSymlink
+            modulesPath = ./modules-directory; # optional
             specialArgs = {
-                username = "defaultuser";
-                # put in your specialArgs
+                hostname = "nixos";
+                # put in your specialArgs like above
             };
         };
     };
@@ -42,13 +46,15 @@ The `hosts`-directory should contain a directory for each host you want to confi
 The host directory should contain a `default.nix` and a `config.nix`. The `default.nix` should contain the configuration for the host. The `config.nix` should contain the values for the specialArgs.
 
 ```
+
 hosts
 ├── host1
-│   ├── config.nix
-│   └── default.nix
+│ ├── config.nix
+│ └── default.nix
 └── host2
-    ├── config.nix
-    └── default.nix
+├── config.nix
+└── default.nix
+
 ```
 
 example `config.nix`:
@@ -56,11 +62,24 @@ example `config.nix`:
 ```nix
 inputs: {
     system = "x86_64-linux";
-    username = "defaultuser";
+    username = "user1";
     hostname = "host1";
     modules = [
         inputs.some-module.nixosModules.some-module
     ];
+}
+```
+
+**default specialArgs**
+
+The default specialArgs are:
+
+```nix
+{
+    isThinClient = false; # if true, lib.mkSymlink will use the store path instead of the flake path
+    system = "x86_64-linux"; # the system of the host
+    username = "nixos"; # the username of the host
+    modules = []; # additional modules to add to the host
 }
 ```
 
@@ -87,10 +106,6 @@ You can declare simple to complex modules:
 ```
 
 TODO: describe how to declare every possible version of a module.
-
-## Development
-
-TODO: explain library functions
 
 ## Contributing
 
