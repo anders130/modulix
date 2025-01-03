@@ -9,6 +9,7 @@
 lib
 // helpers
 // {
+    mkRelativePath = lib.mkRelativePath inputs.self;
     mkSymlink = lib.mkSymlink {
         inherit (inputs) self;
         inherit isThinClient flakePath;
