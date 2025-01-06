@@ -52,8 +52,8 @@ hosts
 │ ├── config.nix
 │ └── default.nix
 └── host2
-├── config.nix
-└── default.nix
+  ├── config.nix
+  └── default.nix
 
 ```
 

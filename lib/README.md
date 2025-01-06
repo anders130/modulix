@@ -29,6 +29,8 @@ It takes the following arguments:
 | `sharedConfig` | shared configuration for all hosts         | `{}`      |
 | `specialArgs`  | special arguments for all hosts            | `{}`      |
 
+> Note: The argument `helpers` can be a function or a set of functions. If it is a function, it will be called with the arguments passed to each file to make functions be able to use configuration values. If it is just a set of functions, they will just be added to the lib.
+
 ## `mkModule`
 
 Used internally to create a module by the `mkModules` function.

@@ -19,6 +19,7 @@
             inherit inputs;
             flakePath = "/home/jesse/Projects/modulix/example";
             modulesPath = ./modules;
+            helpers = hostArgs: import ./lib {inherit hostArgs inputs;};
             specialArgs = {
                 hostname = "nixos";
                 username = "defaultuser";

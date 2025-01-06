@@ -1,4 +1,8 @@
-{lib, ...}: {
+{
+    lib,
+    username,
+    ...
+}: {
     # host specific configuration
 
     modules = {
@@ -13,6 +17,9 @@
     };
 
     system.stateVersion = "24.11";
+
+    users.users.${username}.description = lib.capitalize username;
+    programs.git.package = (lib.getNixpkgs "nixpkgs").git-fire;
 
     hm.home.file."test.txt" = lib.mkSymlink ./test.txt;
 }

@@ -27,7 +27,8 @@
             inherit system;
             # don't remove pkgs because otherwise args doesn't have it
             modules = modules ++ [(args @ {pkgs, ...}: let
-                args' = args // {lib = lib.configure args helpers;};
+                helpers' = if isAttrs helpers then helpers else helpers args;
+                args' = args // {lib = lib.configure args helpers';};
             in {
                 imports = [
                     (internalName
