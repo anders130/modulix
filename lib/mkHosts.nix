@@ -7,7 +7,7 @@
     sharedConfig ? {},
     specialArgs ? {},
 }: let
-    inherit (builtins) attrNames filter isAttrs listToAttrs pathExists readDir;
+    inherit (builtins) attrNames concatStringsSep elem filter isAttrs listToAttrs pathExists readDir;
     inherit (lib) mkModules nixosSystem;
 
     resolve = args: f: if isAttrs f then f else f args;
@@ -49,6 +49,21 @@
             };
         };
 
+    allowedKeys = ["isThinClient" "modules" "system" "username"] ++ (attrNames specialArgs);
+    validateConfig = name: config: config
+        |> attrNames
+        |> filter (key: !(elem key allowedKeys))
+        |> (attrs: if attrs == [] then config
+            else throw ''
+                Host configuration "${name}" is trying to define additional attributes:
+                ${
+                    attrs
+                    |> map (attr: "  - ${attr}")
+                    |> concatStringsSep "\n"
+                }
+            ''
+        );
+
 in path'
     |> readDir
     |> attrNames # get all dir names
@@ -56,6 +71,7 @@ in path'
     |> map (name: (hostPath "${name}/config.nix")
         |> import
         |> resolve inputs
+        |> validateConfig name
         |> (c: {
             inherit name;
             value = mkHost name c;
