@@ -31,11 +31,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1735926807,
-        "narHash": "sha256-3qXvWISHOM3nT8Th5jRh/TqnpuvHXvwJxxfUItQXTJg=",
+        "lastModified": 1735999230,
+        "narHash": "sha256-dtvYNCyEZ48rlmU7q4/mQKcHw3PBaZ9DfXh2XbUsxu0=",
         "owner": "anders130",
         "repo": "modulix",
-        "rev": "a2961f63186715126f1cde3caa24c9d7781ee9d3",
+        "rev": "6b51e354e002dc6a86511067ab3c00f7c3fc6e62",
         "type": "github"
       },
       "original": {

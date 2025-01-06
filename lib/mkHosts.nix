@@ -42,7 +42,7 @@
                 );
             })];
             specialArgs = specialArgs // internalConfig // {
-                inherit internalName inputs isThinClient flakePath;
+                inherit internalName inputs isThinClient flakePath username;
             };
         };
 
