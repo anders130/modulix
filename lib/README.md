@@ -19,15 +19,15 @@ This function is used to create a set of nixosConfigurations.
 
 It takes the following arguments:
 
-| argument       | description                                | default   |
-| -------------- | ------------------------------------------ | --------- |
-| `inputs`       | inputs of the flake                        |           |
-| `flakePath`    | full path to the flake as string           | `null`    |
-| `helpers`      | additional functions to add to the library | `{}`      |
-| `modulesPath`  | path to the modules directory              | `null`    |
-| `path`         | path to the hosts directory                | `./hosts` |
-| `sharedConfig` | shared configuration for all hosts         | `{}`      |
-| `specialArgs`  | special arguments for all hosts            | `{}`      |
+| argument       | description                                       | default   |
+| -------------- | ------------------------------------------------- | --------- |
+| `inputs`       | inputs of the flake                               |           |
+| `flakePath`    | full path to the flake as string                  | `null`    |
+| `helpers`      | additional functions to add to the library        | `{}`      |
+| `modulesPath`  | path to the modules directory                     | `null`    |
+| `path`         | path to the hosts directory                       | `./hosts` |
+| `sharedConfig` | shared configuration for all hosts (accepts args) | `{}`      |
+| `specialArgs`  | special arguments for all hosts                   | `{}`      |
 
 > Note: The argument `helpers` can be a function or a set of functions. If it is a function, it will be called with the arguments passed to each file to make functions be able to use configuration values. If it is just a set of functions, they will just be added to the lib.
 

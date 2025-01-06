@@ -10,6 +10,8 @@
     inherit (builtins) attrNames filter isAttrs listToAttrs pathExists readDir;
     inherit (lib) mkModules nixosSystem;
 
+    resolve = args: f: if isAttrs f then f else f args;
+
     path' =
         if path == null
         then "${inputs.self}/hosts"
@@ -27,16 +29,16 @@
             inherit system;
             # don't remove pkgs because otherwise args doesn't have it
             modules = modules ++ [(args @ {pkgs, ...}: let
-                helpers' = if isAttrs helpers then helpers else helpers args;
+                helpers' = resolve args helpers;
                 args' = args // {lib = lib.configure args helpers';};
             in {
                 imports = [
                     (internalName
                         |> hostPath
                         |> import
-                        |> (c: if isAttrs c then c else c args')
+                        |> resolve args'
                     )
-                    sharedConfig
+                    (resolve args' sharedConfig)
                 ] ++ (
                     if modulesPath == null then []
                     else (mkModules args' modulesPath).imports
@@ -53,7 +55,7 @@ in path'
     |> filter (name: pathExists (hostPath "${name}/config.nix"))
     |> map (name: (hostPath "${name}/config.nix")
         |> import
-        |> (c: if builtins.isAttrs c then c else c inputs)
+        |> resolve inputs
         |> (c: {
             inherit name;
             value = mkHost name c;

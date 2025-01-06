@@ -8,7 +8,8 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
         modulix = {
-            url = "github:anders130/modulix";
+            url = "path:/home/jesse/Projects/modulix";
+            # url = "github:anders130/modulix";
             inputs.nixpkgs.follows = "nixpkgs";
             inputs.home-manager.follows = "home-manager";
         };
@@ -28,8 +29,9 @@
                     userName = "User Name";
                 };
             };
-            sharedConfig = {
+            sharedConfig = {hostname, ...}: {
                 modules.home-manager.enable = true;
+                networking.hostName = hostname;
             };
         };
     };
