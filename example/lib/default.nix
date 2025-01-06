@@ -1,9 +1,9 @@
 {
-    hostArgs,
     inputs,
+    lib,
+    pkgs,
     ...
 }: let
-    inherit (hostArgs) lib;
     inherit (builtins) stringLength substring;
 in {
     capitalize = word:
@@ -15,5 +15,5 @@ in {
             lib.toUpper firstLetter + rest
         else word;
 
-    getNixpkgs = input: inputs.${input}.legacyPackages.${hostArgs.pkgs.system};
+    getNixpkgs = input: inputs.${input}.legacyPackages.${pkgs.system};
 }
