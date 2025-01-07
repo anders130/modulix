@@ -8,7 +8,7 @@
     specialArgs ? {},
 }: let
     inherit (builtins) attrNames concatStringsSep elem filter isAttrs listToAttrs pathExists readDir;
-    inherit (lib) mkModules nixosSystem;
+    inherit (lib) configure mkModules' nixosSystem;
 
     resolve = args: f: if isAttrs f then f else f args;
 
@@ -30,7 +30,7 @@
             # don't remove pkgs because otherwise args doesn't have it
             modules = modules ++ [(args @ {pkgs, ...}: let
                 helpers' = resolve args helpers;
-                args' = args // {lib = lib.configure args helpers';};
+                args' = args // {lib = configure args helpers';};
             in {
                 imports = [
                     (internalName
@@ -41,7 +41,7 @@
                     (resolve args' sharedConfig)
                 ] ++ (
                     if modulesPath == null then []
-                    else (mkModules args' modulesPath).imports
+                    else mkModules' args' modulesPath
                 );
             })];
             specialArgs = specialArgs // internalConfig // {

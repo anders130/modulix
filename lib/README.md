@@ -55,7 +55,7 @@ Specifically, this function creates the following set:
 }
 ```
 
-## `mkModules`
+## `mkModules'`
 
 Used internally to create a set of modules by the `mkHosts` function.
 
@@ -71,6 +71,20 @@ Specifically, this function creates the following set:
         module2
         ...
     ];
+}
+```
+
+## `mkModules`
+
+This function is used to create a set of modules.
+
+- `path`: the path to the modules directory
+
+Specifically, this function creates the following set:
+
+```nix
+{
+    imports = [];
 }
 ```
 
