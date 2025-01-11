@@ -15,8 +15,6 @@
         |> removeSuffix "/default" # if path is a default.nix, remove it
         |> splitString "/";
 
-    configName = elemAt (length - 1) pathList; # last element of the path
-
     cfg = lib.foldl' (obj: key: obj.${key}) hostConfig pathList; # get the modules option values from the hostConfig
 
     adjustConfig = config: config
@@ -26,7 +24,7 @@ in {
     options = options
         |> (o:
             if createEnableOption
-            then o // {enable = lib.mkEnableOption configName;}
+            then o // {enable = lib.mkEnableOption (elemAt pathList (length pathList - 1));}
             else o
         )
         |> (o: foldr (key: acc: {${key} = acc;}) o pathList); # set the value at the path

@@ -31,17 +31,14 @@
         ]
       },
       "locked": {
-        "lastModified": 1736176970,
-        "narHash": "sha256-A+KIIYwRlOaAbyh6ZpAYnLTOKhOQgISphN410PzKCKc=",
-        "owner": "anders130",
-        "repo": "modulix",
-        "rev": "73c6cfa029995e0952a33df52a1d2ec183485862",
-        "type": "github"
+        "lastModified": 0,
+        "narHash": "sha256-D4y1FWaqiOgOBjledx23HoJbtUIchYmQjNxGA4RFeHw=",
+        "path": "../.",
+        "type": "path"
       },
       "original": {
-        "owner": "anders130",
-        "repo": "modulix",
-        "type": "github"
+        "path": "../.",
+        "type": "path"
       }
     },
     "nixpkgs": {

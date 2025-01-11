@@ -8,7 +8,8 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
         modulix = {
-            url = "github:anders130/modulix";
+            # url = "github:anders130/modulix";
+            url = "path:../.";
             inputs.nixpkgs.follows = "nixpkgs";
             inputs.home-manager.follows = "home-manager";
         };
