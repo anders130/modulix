@@ -1,11 +1,12 @@
-{lib, ...}: hostArgs: createEnableOption: path: {
+{root, lib}: hostArgs: createEnableOption: path: {
     imports ? [],
     options ? {},
     config ? null,
     ...
 } @ args: let
     inherit (builtins) elemAt isAttrs length;
-    inherit (lib) foldr mkIf mkRelativePath removeSuffix splitString;
+    inherit (lib) foldr mkEnableOption mkIf removeSuffix splitString;
+    inherit (root) mkRelativePath;
 
     hostConfig = hostArgs.config;
 
@@ -14,8 +15,6 @@
         |> removeSuffix ".nix"
         |> removeSuffix "/default" # if path is a default.nix, remove it
         |> splitString "/";
-
-    configName = elemAt (length - 1) pathList; # last element of the path
 
     cfg = lib.foldl' (obj: key: obj.${key}) hostConfig pathList; # get the modules option values from the hostConfig
 
@@ -26,7 +25,7 @@ in {
     options = options
         |> (o:
             if createEnableOption
-            then o // {enable = lib.mkEnableOption configName;}
+            then o // {enable = mkEnableOption (elemAt pathList (length pathList - 1));}
             else o
         )
         |> (o: foldr (key: acc: {${key} = acc;}) o pathList); # set the value at the path
