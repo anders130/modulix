@@ -6,6 +6,12 @@ Please have a look at [lib](./lib) for more information about the library functi
 
 ## Usage
 
+To use this library, you need to have enabled the following experimental features:
+
+```conf
+experimental-features = nix-command flakes pipe-operators
+```
+
 Look at the [example](./example) directory for a working example.
 
 `flake.nix`:
