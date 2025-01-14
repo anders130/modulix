@@ -13,23 +13,12 @@
         };
     };
 
-    outputs = {
-        self,
-        nixpkgs,
-        haumea,
-        ...
-    }: {
-        checks = haumea.lib.loadEvalTests {
-            src = ./tests;
-            inputs = {
-                inherit (nixpkgs) lib;
-                modulix = self.lib;
-            };
-        };
-        lib = haumea.lib.load {
+    outputs = inputs: {
+        checks = import ./tests inputs;
+        lib = inputs.haumea.lib.load {
             src = ./src;
             inputs = {
-                inherit (nixpkgs) lib;
+                inherit (inputs.nixpkgs) lib;
             };
         };
     };

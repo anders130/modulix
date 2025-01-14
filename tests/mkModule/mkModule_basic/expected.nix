@@ -1,9 +1,9 @@
-{modulix, ...}: {
-    imports = [./other.nix];
+{modulix}: {
+    imports = [];
     options.example.enable = modulix.internal.enableOptionResult "example";
     config = {
         _type = "if";
         condition = true;
-        content = {};
+        content.foo.bar = 1;
     };
 }
