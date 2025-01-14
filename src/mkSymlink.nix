@@ -1,4 +1,4 @@
-{lib, ...}: {
+{root}: {
     self,
     flakePath,
     hmConfig,
@@ -11,7 +11,7 @@
 in {
     recursive = true; # important for directories but has no effect on files
     source = path
-        |> lib.mkRelativePath self
+        |> root.mkRelativePath self
         |> (p: "${basePath}/${p}")
         |> hmConfig.lib.file.mkOutOfStoreSymlink;
 }
