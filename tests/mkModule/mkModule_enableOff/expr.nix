@@ -10,5 +10,5 @@
     module = {
         config.foo.bar = 1;
     };
-in modulix.mkModule hostArgs true ./example module
+in modulix.mkModule hostArgs false ./example module
     |> modulix.internal.cleanupModule
