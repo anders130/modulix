@@ -1,4 +1,7 @@
-{root}: {
+{
+    root,
+    lib,
+}: {
     config,
     flakePath,
     inputs,
@@ -6,9 +9,10 @@
     username,
     ...
 }: helpers:
-root
-// helpers
-// {
+lib # nixos
+// root # modulix
+// helpers # user defined stuff
+// { # better modulix
     mkRelativePath = root.mkRelativePath inputs.self;
     mkSymlink = root.mkSymlink {
         inherit (inputs) self;
