@@ -19,6 +19,7 @@
             src = ./src;
             inputs = {
                 inherit (inputs.nixpkgs) lib;
+                haumea = inputs.haumea.lib;
             };
         };
     };

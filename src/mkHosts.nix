@@ -1,41 +1,60 @@
-{lib, root}: {
+{
+    haumea,
+    lib,
+    root
+}: {
     inputs,
     flakePath ? null,
     helpers ? {},
     modulesPath ? null,
-    path ? null,
+    path ? "${inputs.self}/hosts",
     sharedConfig ? {},
     specialArgs ? {},
 }: let
-    inherit (builtins) attrNames concatStringsSep elem filter isAttrs listToAttrs pathExists readDir;
+    inherit (builtins) attrNames concatStringsSep elem filter isAttrs mapAttrs;
     inherit (lib) nixosSystem;
     inherit (root.internal) configure mkModules;
 
-    resolve = args: f: if isAttrs f then f else f args;
+    mkHost = let
+        resolve = args: f: if isAttrs f then f else f args;
 
-    path' =
-        if path == null
-        then "${inputs.self}/hosts"
-        else path;
+        defaultArgs = {
+            isThinClient = false;
+            modules = [];
+            system = "x86_64-linux";
+            username = "nixos";
+        } // specialArgs;
 
-    hostPath = sub: "${path'}/${sub}";
-
-    mkHost = internalName: internalConfig @ {
-        isThinClient ? false,
-        modules ? [],
-        system ? "x86_64-linux",
-        username ? "nixos",
-        ...
-    }: nixosSystem {
-            inherit system;
-            # don't remove pkgs because otherwise args doesn't have it
-            modules = modules ++ [(args @ {pkgs, ...}: let
+        validateConfig = name: config: config
+            |> attrNames
+            |> filter (key: !(elem key (attrNames defaultArgs)))
+            |> (attrs: if attrs == [] then config
+                else throw ''
+                    Host configuration "${name}" is trying to define additional attributes:
+                    ${
+                        attrs
+                        |> map (attr: "  - ${attr}")
+                        |> concatStringsSep "\n"
+                    }
+                ''
+            );
+    in (internalName: value: value.config
+        |> import
+        |> resolve inputs
+        |> validateConfig internalName
+        |> (c: defaultArgs // c)
+        |> (c: nixosSystem {
+            inherit (c) system;
+            specialArgs = specialArgs // c // {
+                inherit flakePath inputs internalName;
+                inherit (c) isThinClient username;
+            };
+            modules = c.modules ++ [(args @ {pkgs, ...}: let
                 helpers' = resolve args helpers;
                 args' = args // {lib = configure args helpers';};
             in {
                 imports = [
-                    (internalName
-                        |> hostPath
+                    (value.default
                         |> import
                         |> resolve args'
                     )
@@ -45,37 +64,10 @@
                     else mkModules args' modulesPath
                 );
             })];
-            specialArgs = specialArgs // internalConfig // {
-                inherit internalName inputs isThinClient flakePath username;
-            };
-        };
-
-    allowedKeys = ["isThinClient" "modules" "system" "username"] ++ (attrNames specialArgs);
-    validateConfig = name: config: config
-        |> attrNames
-        |> filter (key: !(elem key allowedKeys))
-        |> (attrs: if attrs == [] then config
-            else throw ''
-                Host configuration "${name}" is trying to define additional attributes:
-                ${
-                    attrs
-                    |> map (attr: "  - ${attr}")
-                    |> concatStringsSep "\n"
-                }
-            ''
-        );
-
-in path'
-    |> readDir
-    |> attrNames # get all dir names
-    |> filter (name: pathExists (hostPath "${name}/config.nix"))
-    |> map (name: (hostPath "${name}/config.nix")
-        |> import
-        |> resolve inputs
-        |> validateConfig name
-        |> (c: {
-            inherit name;
-            value = mkHost name c;
         })
-    )
-    |> listToAttrs
+    );
+in
+    mapAttrs mkHost (haumea.load {
+        src = path;
+        loader = haumea.loaders.path;
+    })
