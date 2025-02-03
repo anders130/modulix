@@ -12,27 +12,19 @@
                 newKey =
                     if prefix == ""
                     then key
-                    else "${prefix}_${key}";
+                    else "${prefix}/${key}";
             in
                 if isAttrs value && value ? expected && value ? expr
                 then acc // {${newKey} = value;}
                 else acc // flatten newKey set.${key}
         ) {} (attrNames set);
 
-    tests =
-        haumea.load {
-            inherit (args) src inputs;
-            loader = inputs: path:
-                if path == (args.src + "/default.nix")
-                then {}
-                else haumea.loaders.default inputs path;
-        }
-        |> lib.filterAttrs (k: v: v != {})
-        |> flatten "";
+    tests = flatten "" (haumea.load args);
 
-    results = runTests (tests // {
-        tests = attrNames tests;
-    });
+    results = runTests (tests
+        // {
+            tests = attrNames tests;
+        });
 in
     assert tests
     ? tests
