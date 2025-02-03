@@ -14,7 +14,14 @@
     };
 
     outputs = inputs: {
-        checks = import ./tests inputs;
+        checks = inputs.self.lib.recursiveLoadEvalTests {
+            src = ./tests;
+            inputs = {
+                inherit (inputs) home-manager;
+                inherit (inputs.nixpkgs) lib;
+                modulix = inputs.self.lib;
+            };
+        };
         lib = inputs.haumea.lib.load {
             src = ./src;
             inputs = {
