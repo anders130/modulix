@@ -115,6 +115,23 @@ You can declare simple to complex modules:
 
 Contributions are welcome!
 
+### Documentation
+
+The documentation is written in [mdbook](https://rust-lang.github.io/mdBook/) and can be found in the [docs](./docs) directory.
+You can start a local server with:
+
+```bash
+cd docs
+nix develop
+```
+
+To build the documentation locally, run the following command:
+
+```bash
+cd docs
+nix build
+```
+
 ## License
 
 [MIT](./LICENSE)
