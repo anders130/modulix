@@ -14,7 +14,7 @@ It takes the following arguments:
 | `flakePath`    | full path to the flake as string                  | `null`    |
 | `helpers`      | additional functions to add to the library        | `{}`      |
 | `modulesPath`  | path to the modules directory                     | `null`    |
-| `path`         | path to the hosts directory                       | `./hosts` |
+| `src`          | path to the hosts directory                       | `./hosts` |
 | `sharedConfig` | shared configuration for all hosts (accepts args) | `{}`      |
 | `specialArgs`  | special arguments for all hosts                   | `{}`      |
 
@@ -105,6 +105,11 @@ When configured, the set will be already set and you can use it like this:
 ```nix
 hm.home.file."test.txt" = lib.mkSymlink ./path/to/test.txt;
 ```
+
+## `recursiveLoadEvalTests`
+
+This function is used to load and evaluate tests from a directory (much like `haumea.lib.loadEvalTests`). But it will flatten the directory structure to allow for nested directories and add them to the tests name for easier debugging.
+It is used internally for the tests.
 
 ## `internal`-functions
 
