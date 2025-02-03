@@ -34,7 +34,7 @@ Look at the [example](./example) directory for a working example.
     outputs = inputs: {
         nixosConfigurations = inputs.modulix.lib.mkHosts {
             inherit inputs;
-            path = ./hosts-directory; # optional
+            src = ./hosts-directory; # optional (defaults to ./hosts)
             flakePath = "/path/to/flake"; # for lib.mkSymlink
             modulesPath = ./modules-directory; # optional
             specialArgs = {
@@ -110,8 +110,6 @@ You can declare simple to complex modules:
     };
 }
 ```
-
-TODO: describe how to declare every possible version of a module.
 
 ## Contributing
 
