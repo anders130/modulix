@@ -7,7 +7,7 @@
     flakePath ? null,
     helpers ? {},
     modulesPath ? null,
-    path ? "${inputs.self}/hosts",
+    src ? "${inputs.self}/hosts",
     sharedConfig ? {},
     specialArgs ? {},
 }: let
@@ -68,6 +68,6 @@
     );
 in
     mapAttrs mkHost (haumea.load {
-        src = path;
+        inherit src;
         loader = haumea.loaders.path;
     })
