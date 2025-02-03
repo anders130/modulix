@@ -1,4 +1,4 @@
 {modulix}: modulix.mkHosts {
-    inputs.self = ./.;
+    inputs.self = ./__fixture;
 }
 |> builtins.attrNames

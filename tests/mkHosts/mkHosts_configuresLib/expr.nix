@@ -1,5 +1,5 @@
 {home-manager, modulix}: modulix.mkHosts {
-    inputs.self = ./.;
+    inputs.self = ./__fixture;
     flakePath = "/home/user1/project";
     sharedConfig = {
         imports = [home-manager.nixosModules.home-manager];

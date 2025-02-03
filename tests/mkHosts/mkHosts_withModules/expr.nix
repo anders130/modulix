@@ -1,6 +1,6 @@
 {modulix}: (modulix.mkHosts {
-    inputs.self = ./.;
-    modulesPath = ./modules;
+    inputs.self = ./__fixture;
+    modulesPath = ./__fixture/modules;
 }).host1.config
 |> (x: {
     programs.git.enable = x.programs.git.enable;

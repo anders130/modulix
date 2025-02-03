@@ -1,5 +1,5 @@
 {modulix}: (modulix.mkHosts {
-    inputs.self = ./.;
+    inputs.self = ./__fixture;
     specialArgs.testArg = true;
 })
     |> builtins.mapAttrs (_: y:
