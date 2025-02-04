@@ -2,30 +2,6 @@
 
 modulix library functions.
 
-## `mkModule`
-
-Used internally to create a module by the `mkModules` function.
-
-- `hostArgs`: the arguments passed to each file, including `pkgs`
-- `createEnableOption`: whether to create an `enable` option for the module
-- `path`: the path to the module
-- `args`: contents of the modules file. This can contain imports, options and config attributes but does not have to.
-
-Specifically, this function creates the following set:
-
-```nix
-{
-    imports = [...];
-    options.path.to.module = {
-        enable = mkEnableOption "module name";
-        ...
-    };
-    config = mkIf cfg.enable {
-        ...
-    };
-}
-```
-
 ## `mkModules`
 
 This function is used to create a set of modules.
