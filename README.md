@@ -2,8 +2,6 @@
 
 A library for creating modularized nixos configurations, built upon [haumea](https://github.com/nix-community/haumea).
 
-Please have a look at [lib](./lib) for more information about the library functions.
-
 ## Usage
 
 To use this library, you need to have enabled the following experimental features:
