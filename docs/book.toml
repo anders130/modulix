@@ -1,0 +1,13 @@
+[book]
+authors = ["anders130"]
+description = "library for creating modularized nixos hosts"
+title = "modulix"
+
+[build]
+extra-watch-dirs = ["."]
+
+[output.html]
+edit-url-template = "https://github.com/anders130/modulix/edit/master/docs/{path}"
+git-repository-url = "https://github.com/anders130/modulix"
+preferred-dark-theme = "navy"
+site-url = "/modulix/"

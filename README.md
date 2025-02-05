@@ -2,8 +2,6 @@
 
 A library for creating modularized nixos configurations, built upon [haumea](https://github.com/nix-community/haumea).
 
-Please have a look at [lib](./lib) for more information about the library functions.
-
 ## Usage
 
 To use this library, you need to have enabled the following experimental features:
@@ -114,6 +112,23 @@ You can declare simple to complex modules:
 ## Contributing
 
 Contributions are welcome!
+
+### Documentation
+
+The documentation is written in [mdbook](https://rust-lang.github.io/mdBook/) and can be found in the [docs](./docs) directory.
+You can start a local server with:
+
+```bash
+cd docs
+nix develop
+```
+
+To build the documentation locally, run the following command:
+
+```bash
+cd docs
+nix build
+```
 
 ## License
 
