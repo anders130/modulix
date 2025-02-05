@@ -7,3 +7,4 @@
   - [`mkRelativePath`](./api/mkRelativePath.md)
   - [`mkSymlink`](./api/mkSymlink.md)
   - [`recursiveLoadEvalTests`](./api/recursiveLoadEvalTests.md)
+  - [`internal`](./api/internal.md)
