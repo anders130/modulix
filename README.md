@@ -1,8 +1,10 @@
 # modulix
 
-A library for creating modularized nixos configurations, built upon [haumea](https://github.com/nix-community/haumea).
+A NixOS configuration framework that simplifies host and module management using a structured approach, built upon [haumea](https://github.com/nix-community/haumea).
 
-## Usage
+Please see the [docs](https://anders130.github.io/modulix) for more information.
+
+## Basic Usage
 
 To use this library, you need to have enabled the following experimental features:
 
@@ -68,9 +70,7 @@ inputs: {
     system = "x86_64-linux";
     username = "user1";
     hostname = "host1";
-    modules = [
-        inputs.some-module.nixosModules.some-module
-    ];
+    modules = [inputs.some-module.nixosModules.some-module];
 }
 ```
 
