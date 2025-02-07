@@ -23,3 +23,12 @@ This function is used to get the relative path of a file from a given root path.
 mkRelativePath ./. ./path/to/file
 # returns "path/to/file"
 ```
+
+## Usage inside files managed by `mkHosts`:
+
+This function is configured by the `mkHosts` function to be used in a more convenient way:
+
+```nix
+mkRelativePath ./path/to/file
+# returns "path/to/file"
+```

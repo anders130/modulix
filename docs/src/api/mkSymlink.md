@@ -42,3 +42,11 @@ Specifically, this function creates the following set:
     source = <drv>;
 }
 ```
+
+## Usage inside files managed by `mkHosts`:
+
+This function is configured by the `mkHosts` function to be used in a more convenient way:
+
+```nix
+mkSymlink ./path/to/file
+```
