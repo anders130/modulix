@@ -1,1 +1,1 @@
-{self}: path: [(args @ {pkgs, ...}: {imports = self.internal.mkModules args path;})]
+{root}: path: [(args @ {pkgs, ...}: {imports = root.internal.mkModules args path;})]
