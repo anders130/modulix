@@ -1,4 +1,7 @@
 {
     recursive = true;
-    source = "/home/user1/project/example";
+    source = {
+        name = "hm_example";
+        path = "/home/user1/project/basic/example";
+    };
 }
