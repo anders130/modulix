@@ -16,14 +16,9 @@ Then add **modulix** to your flake inputs:
 {
     inputs = {
         nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-        home-manager = {
-            url = "github:nix-community/home-manager";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
         modulix = {
             url = "github:anders130/modulix";
             inputs.nixpkgs.follows = "nixpkgs";
-            inputs.home-manager.follows = "home-manager";
         };
     };
 
@@ -31,7 +26,7 @@ Then add **modulix** to your flake inputs:
 }
 ```
 
-> While overriding the `nixpkgs` and `home-manager` inputs is not required, it's recommended for consistency across your configuration.
+> While overriding the `nixpkgs` input is not required, it's recommended for consistency across your configuration.
 
 ## Using `mkHosts`
 

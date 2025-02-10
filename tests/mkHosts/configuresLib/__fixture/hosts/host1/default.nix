@@ -1,3 +1,11 @@
 {lib, ...}: {
-    home-manager.users.nixos.home.file."test.txt" = lib.mkSymlink ./test.txt;
+    options.testFile = {
+        source = lib.mkOption {
+            type = lib.types.package;
+        };
+        recursive = lib.mkOption {
+            type = lib.types.bool;
+        };
+    };
+    config.testFile = lib.mkSymlink ./test.txt;
 }

@@ -8,7 +8,7 @@ Arguments:
 
 - `inputs` : `{ ... }`
 
-  Inputs of the flake. Must contain `self`, `nixpkgs` and `home-manager`.
+  Inputs of the flake. Must contain `self` and `nixpkgs`.
 
 - (optional) `src` : `Path`
 

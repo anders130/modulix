@@ -46,16 +46,13 @@
     "modulix": {
       "inputs": {
         "haumea": "haumea",
-        "home-manager": [
-          "home-manager"
-        ],
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
         "lastModified": 0,
-        "narHash": "sha256-UDG1X6mzEaYYbny7QTpUxoERX4YWzZmZ8Z30IIsy+ag=",
+        "narHash": "sha256-UnYsDhLO2deSsyPL3bcC2iNdm/HDgkEngQi/iCaCLAw=",
         "path": "../.",
         "type": "path"
       },
