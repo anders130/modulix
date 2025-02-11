@@ -20,14 +20,9 @@ Look at the [example](./example) directory for a working example.
 {
     inputs = {
         nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-        home-manager = {
-            url = "github:nix-community/home-manager";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
         modulix = {
             url = "github:anders130/modulix";
             inputs.nixpkgs.follows = "nixpkgs";
-            inputs.home-manager.follows = "home-manager";
         };
     };
 

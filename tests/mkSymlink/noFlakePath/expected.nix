@@ -1,4 +1,7 @@
 {
     recursive = true;
-    source = "/example"; # should be relative to self
+    source = {
+        name = "hm_example";
+        path = "/noFlakePath/example";
+    };
 }
