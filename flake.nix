@@ -20,7 +20,6 @@
         lib = inputs.haumea.lib.load {
             src = ./src;
             inputs = {
-                inherit inputs;
                 inherit (inputs.nixpkgs) lib;
                 haumea = inputs.haumea.lib;
             };
