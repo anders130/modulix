@@ -77,7 +77,6 @@ The default specialArgs are:
 {
     isThinClient = false; # if true, lib.mkSymlink will use the store path instead of the flake path
     system = "x86_64-linux"; # the system of the host
-    username = "nixos"; # the username of the host
     modules = []; # additional modules to add to the host
 }
 ```

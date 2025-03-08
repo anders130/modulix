@@ -1,5 +1,6 @@
 {modulix}: (modulix.mkHosts {
     inputs.self = ./__fixture;
+    specialArgs.username = "nixos";
     helpers = args: {
         getUsername = "got ${args.username}";
     };

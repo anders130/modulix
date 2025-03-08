@@ -22,7 +22,6 @@
             isThinClient = false;
             modules = [];
             system = "x86_64-linux";
-            username = "nixos";
         } // specialArgs;
 
         validateConfig = name: config: config
@@ -47,7 +46,7 @@
             inherit (c) system;
             specialArgs = specialArgs // c // {
                 inherit flakePath inputs internalName;
-                inherit (c) isThinClient username;
+                inherit (c) isThinClient;
             };
             modules = c.modules ++ [(args @ {pkgs, ...}: let
                 helpers' = resolve args helpers;
