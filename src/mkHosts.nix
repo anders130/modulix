@@ -12,7 +12,7 @@
     specialArgs ? {},
 }: let
     inherit (builtins) attrNames concatStringsSep elem filter isAttrs mapAttrs;
-    inherit (lib) nixosSystem;
+    inherit (lib) nixosSystem attrsToList;
     inherit (root.internal) configure mkModules;
 
     mkHost = let
@@ -51,17 +51,22 @@
             modules = c.modules ++ [(args @ {pkgs, ...}: let
                 helpers' = resolve args helpers;
                 args' = args // {lib = configure args helpers';};
-            in {
-                imports = [
-                    (value.default
+
+                hostConfigs = value
+                    |> attrsToList
+                    |> filter (x: x.name != "config")
+                    |> map (x: x.value
                         |> import
                         |> resolve args'
-                    )
-                    (resolve args' sharedConfig)
-                ] ++ (
-                    if modulesPath == null then []
-                    else mkModules args' modulesPath
-                );
+                    );
+                moduleConfigs = if modulesPath == null
+                    then []
+                    else mkModules args' modulesPath;
+            in {
+                imports =
+                    hostConfigs
+                    ++ moduleConfigs
+                    ++ [(resolve args' sharedConfig)];
             })];
         })
     );
