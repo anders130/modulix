@@ -59,7 +59,7 @@ The `mkHosts` function will assume a directory structure like this:
 .
 ├── hosts
 │   ├── host1
-│   │   ├── config.nix  # special args for the host
+│   │   ├── config.nix  # special args for the host (optional: default args are used)
 │   │   └── default.nix # the configuration for the host
 │   └── host2
 │       ├── config.nix

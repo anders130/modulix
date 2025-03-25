@@ -37,8 +37,8 @@
                     }
                 ''
             );
-    in (internalName: value: value.config
-        |> import
+    in (internalName: value: value
+        |> (v: if v ? config then import v.config else {})
         |> resolve inputs
         |> validateConfig internalName
         |> (c: defaultArgs // c)
