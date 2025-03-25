@@ -2,6 +2,7 @@
     # host specific configuration
 
     modules = {
+        bootable.enable = true;
         home-manager.enable = true;
         git2 = {
             enable = true;
@@ -9,4 +10,6 @@
             userName = "User Name 2";
         };
     };
+
+    system.stateVersion = "24.11";
 }

@@ -6,6 +6,7 @@
     # host specific configuration
 
     modules = {
+        bootable.enable = true;
         category.subcategory.module1.enable = true;
         fish.enable = true;
         multifileModule = {
