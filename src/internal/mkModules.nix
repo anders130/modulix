@@ -9,8 +9,11 @@
 
     getFiles = dir: dir
         |> lib.filesystem.listFilesRecursive # list all files in the directory
-        |> filter (n: lib.strings.hasSuffix ".nix" n) # only nix files
-        # |> filter (n: n != ./default.nix) # filter out this file
+        |> filter ( n:
+            lib.strings.hasSuffix ".nix" n # only nix files
+            &&
+            !(lib.strings.hasPrefix "_" (baseNameOf n)) # don't include hidden files (start with _)
+        )
         |> groupBy (file: toString (dirOf file))
         |> attrValues
         # if there is a default.nix file, then spread the files into the list
