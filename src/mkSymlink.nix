@@ -1,8 +1,8 @@
 {lib, root}: hostArgs: path: let
     inherit (hostArgs) flakePath isThinClient pkgs;
     inherit (hostArgs.inputs) self;
-    inherit (lib) escapeShellArg lowerChars stringToCharacters upperChars;
-    inherit (builtins) genList length replaceStrings warn;
+    inherit (lib) escapeShellArg lowerChars stringToCharacters upperChars warn;
+    inherit (builtins) genList length replaceStrings;
 
     basePath = let
         s = toString self;
