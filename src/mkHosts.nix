@@ -11,7 +11,7 @@
     sharedConfig ? {},
     specialArgs ? {},
 }: let
-    inherit (builtins) attrNames concatStringsSep elem filter isAttrs mapAttrs;
+    inherit (builtins) attrNames concatStringsSep elem filter foldl' isAttrs mapAttrs;
     inherit (lib) nixosSystem attrsToList;
     inherit (root.internal) configure mkModules;
 
@@ -38,6 +38,7 @@
                 ''
             );
     in (internalName: value: value
+        |> flattenAttrsWithPrefix ""
         |> (v: if v ? config then import v.config else {})
         |> resolve inputs
         |> validateConfig internalName
@@ -70,8 +71,22 @@
             })];
         })
     );
+
+    flattenAttrsWithPrefix = prefix: set:
+        foldl' (acc: key: let
+            value = set.${key};
+            newKey =
+                if prefix == ""
+                then key
+                else "${prefix}/${key}";
+        in
+            if isAttrs value
+            then acc // flattenAttrsWithPrefix newKey value
+            else acc // {${newKey} = value;}) {} (attrNames set);
 in
-    mapAttrs mkHost (haumea.load {
+    haumea.load {
         inherit src;
         loader = haumea.loaders.path;
-    })
+    }
+    |> mapAttrs (_: flattenAttrsWithPrefix "")
+    |> mapAttrs mkHost
